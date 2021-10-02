@@ -13,7 +13,7 @@ bool existe(int vetor[], int tam, int X) // Primeira função
     return false; // false = 0
 }
 
-int contar(int vetor[], int tam, int X) //
+int contar(int vetor[], int tam, int X)
 {
     int contador = 0;
 
