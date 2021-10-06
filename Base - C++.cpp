@@ -63,7 +63,7 @@ int main()
     cin >> x;
 
     bool ext = existe(vetor, tam, x);
-    cout << "Existe: " << ext << endl;
+    cout << "Existe: " << (ext ? "true" : "false") << endl;
 
     cont =  contar(vetor, tam, x);
     cout << "Quantidade de vezes que aparece: " << cont << endl;
