@@ -80,27 +80,50 @@ struct Motorcycle
         cout << this->time << " minutes\n";
     }
 
+    bool right(Person *person, int &time)
+    {
+        if (person->age > 10 && time <= 0)
+        {
+            cout << "Time and age no corrects.\n";
+            return false;
+        }
+    }
     void drive(int tempo)
-    {
-         if(this->time > 0) {
-             cout << "Time's not over yet, keep driving!\n";
-        } else {
-            cout << "The ride is over!\n";
+        {
+            if (this->person != nullptr)
+            {
+                if (right(this->person, this->time))
+                {
+                    int rest = this->time;
+                    if (rest < 0)
+                    {
+                        cout << "Been " << this->time << " and time s up.\n";
+                        this->time = 0;
+                    }
+                    else
+                    {
+                        this->time = rest;
+                    }
+                }
+            }
+            else
+            {
+                cout << "The motorcycle is empty ";
+            }
         }
-    }
 
-    Person* honk()
-    {
-        if (this->power == 1)
+        Person *honk()
         {
-            cout << "Pem\n";
+            if (this->person != nullptr)
+            {
+                cout << "pem";
+            }
+            else
+            {
+                cout << "The motorcycle is empty\n";
+            }
         }
-        else
-        {
-            cout << "Peeeem\n";
-        }
-    }
-};
+    };
 
 int main()
 {
