@@ -7,14 +7,11 @@
 using namespace std;
 
 class Kid{
-private:
+public:
     int age;
     string name;
 
-public:
-    Kid(string name, int age){
-        this->name;
-        this->age;
+    Kid(string name = "", int age = 0) : name{name}, age{age}{
     }
 
     int getAge(){
@@ -41,28 +38,41 @@ public:
 };
 
 class Trampoline{
-private:
+public:
     vector<shared_ptr<Kid>> waiting;
     list<shared_ptr<Kid>>   playing;
 
 public:
-    bool cheio(int cheio){
-        return cheio >= 0 && cheio < playing.size();
-    }
-
     Trampoline(int qtdBrinquedos) : playing(qtdBrinquedos, nullptr){
     }
 
     void arrive(const shared_ptr<Kid>& kid){
+        cout << "Na fila de espera aguardando a vez!" << endl;
         this->waiting.push_back(kid);
     }
 
-    void in(){
-        if (this->waiting.size() == 0){
-            return;
+    bool in(int espaco)
+    {
+        if (espaco < 0 || espaco >= this->playing.size())
+        {
+            cout << "Trampolim invalido" << endl;
+            return false;
         }
-        this->playing.push_back(this->waiting.front());
-        this->waiting.begin();
+        auto iterator = *next(this->playing.begin(), espaco);
+        if (iterator != nullptr)
+        {
+            cout << "Trampolim ocupado" << endl;
+            return false;
+        }
+        if (this->waiting.empty())
+        {
+            cout << "fila de espera vazia" << endl;
+            return false;
+        }
+        cout << "a pessoa " << this->waiting.front()->name << " entrou no pula pula" << endl;
+        iterator = this->waiting.front();
+        this->waiting.erase(waiting.begin());
+        return true;
     }
 
     void out(){
@@ -70,6 +80,7 @@ public:
             cout << "Trampolim fechado" << endl;
             return;
         }
+
         this->waiting.push_back(this->playing.front());
         this->playing.erase(this->playing.begin());
     }
@@ -83,7 +94,7 @@ public:
         }
 
         auto iterator = *next(this->playing.begin(), out);
-        if (iterator = nullptr)
+        if (iterator == nullptr)
         {
             cout << "Trampolim vazio" << endl;
             return false;
@@ -113,24 +124,16 @@ int main()
     trampoline.arrive(make_shared<Kid>("Joao", 12));
     trampoline.arrive(make_shared<Kid>("Pedro", 6));
     trampoline.arrive(make_shared<Kid>("Maria", 11));
-    trampoline.arrive(make_shared<Kid>("Ana", 8));
-    trampoline.arrive(make_shared<Kid>("Rafa", 7));
-    trampoline.arrive(make_shared<Kid>("Leo", 7));
-
-    trampoline.in();
-    trampoline.in();
-    trampoline.in();
-    trampoline.in();
-    trampoline.in();
-    trampoline.in();
-    trampoline.in();
+  
+    trampoline.in(1);
+    trampoline.in(0);
+    trampoline.in(1);
 
     trampoline.out();
     trampoline.out();
 
     trampoline.remove(0);
-    trampoline.remove(3);
-
+    trampoline.remove(0);
 
     cout << trampoline << endl;
 }
