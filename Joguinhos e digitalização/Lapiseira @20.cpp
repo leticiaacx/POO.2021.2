@@ -84,7 +84,7 @@ int main () {
 
     cout << lapiseira << endl;
     lapiseira.inserirGrafite(make_shared<Grafite>(0.5, 20, "4B"));
-    lapiseira.inserirGrafite(make_shared<Grafite>(0.7, 50, "HB"));
+    lapiseira.inserirGrafite(make_shared<Grafite>(1, 50, "HB"));
     lapiseira.inserirGrafite(make_shared<Grafite>(0.5, 20, "6B"));
 
     lapiseira.puxarGrafite();
