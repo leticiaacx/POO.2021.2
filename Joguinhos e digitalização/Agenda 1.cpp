@@ -23,7 +23,7 @@ public:
         return this->number;
     }
     
-    static bool validate(string number){
+    static bool validate(string number){ //validade de numero
         int sun = 0;
         for (int i = 0; i < 9; i++){
             sun += number[i] * (10 - 1);
@@ -59,7 +59,7 @@ protected:
     string prefix = "-";
 
 private:
-    bool foneRepetido(Fone fone){
+    bool foneRepetido(Fone fone){ // aqui ele verifica se há números repetidos
         for (int i = 0; i < (int)this->fones.size(); i++){
             if ((this->fones[i].getId() == fone.getId()) && (this->fones[i].getNumber() == fone.getNumber())){
                 return true;
@@ -128,7 +128,12 @@ int main()
     contato3.rmFone(0);
     cout << "\n";
 
+    Contact contato4("Leticia");
+    contato4.addFone(Fone("Zap", "9181"));
+    cout << "\n";
+
     cout << contato << endl;
     cout << contato2 << endl;
     cout << contato3 << endl;
+    cout << contato4 << endl;
 }

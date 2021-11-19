@@ -85,7 +85,7 @@ public:
         this->playing.erase(this->playing.begin());
     }
 
-    bool remove(int out)
+    bool remove(int out) //booleano
     {
         if (out < 0 || out >= this->playing.size())
         {
