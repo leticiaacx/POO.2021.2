@@ -73,7 +73,7 @@ public:
 
     void addFone(Fone fone){
         if (fone.validate != nullptr){ // vai verificar se é diferente de zero, ent vai pro outro if
-            if (foneRepetido(fone)){ // aqui vai verifcar se o numero ja existe
+            if (foneRepetido(fone) == 1){ // aqui vai verifcar se o numero ja existe
                 cout << "Numero de telefone ja existente" << endl;
                 return; // vai imprimir isso
             }
@@ -129,7 +129,7 @@ int main()
     cout << "\n";
 
     Contact contato4("Leticia");
-    contato4.addFone(Fone("Zap", "9181"));
+    contato4.addFone(Fone("Zap", "9183"));
     cout << "\n";
 
     cout << contato << endl;
