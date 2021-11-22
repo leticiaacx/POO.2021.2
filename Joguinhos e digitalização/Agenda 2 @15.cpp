@@ -160,6 +160,15 @@ public:
             contacts[pos].addFone(fones[i]);
         }
     }
+    void rmContact(string name, int index){
+        int pos = findPos(name);
+        if (pos != -1){
+            this->contacts[pos].rmFone(index);
+            return;
+        }
+        cout << "Contato nao existente" << '\n';
+        return;
+    }
 
     void rmContact(string name){
         int pos = findPos(name);
@@ -219,22 +228,21 @@ int main()
     Contact Ana{"Ana"};
 
     Joao.addFone(Fone{"oi", "888"});
-    Joao.addFone(Fone{"vivo", "832"});
     Lara.addFone(Fone{"tim", "788"});
     Lara.addFone(Fone{"claro", "138"});
     Ana.addFone(Fone{"vivo", "246"});
-    Ana.addFone(Fone{"oi", "23827"});
-    Ana.addFone(Fone{"tim", "2234"});
 
+    cout << "Lista de contatos...." << endl;
+    agenda.addContact(Joao);
     agenda.addContact(Lara);
     agenda.addContact(Ana);
 
     cout << agenda << endl;
 
     cout << "Removendo contatos...." << endl;
-    agenda.rmContact("Joao");
+    agenda.rmContact("Ana");
+    agenda.rmContact("Lara", 1);
 
-    cout << "\n" << endl;
     cout << "Procurando contatos...." << endl;
     agenda.search("7");
     cout << agenda << endl;
