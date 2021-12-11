@@ -3,9 +3,10 @@
         {
             "name": "Windows",
             "intelliSenseMode": "gcc-x86",
-            "compilerPath": "C:\\MinGW\\bin\\gcc",
-            "includePath": [
-                "C:\\SFML\\include"
+            "compilerPath": "C:\\MinGW\\bin\\g++",
+            "includePath": [ 
+                "C:\\SFML\\include",
+                "C:/MinGW/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"
             ],
             "cStandard": "gnu11",
             "cppStandard": "c++17"

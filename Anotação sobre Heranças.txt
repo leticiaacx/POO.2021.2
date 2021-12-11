@@ -1,0 +1,12 @@
+1. Se eu não inicializar um bool na class, corre o risco de ter lixo
+2. Se eu não definir o " public or private" por default ela vai ser private.
+3. Pra acessar o bool que eu criei vou criar um get
+4. Sempre que um "animal" é criado automaticmente o construtor é rodado
+5. No caso desse exemplo, ele entra no construtor de "create" e quando sai vai pro "destroy"
+ Então o animal nasce e logo em seguida ele morre
+6. Como é um booleano, não vai precisar botar get, só "isLive"
+7. O animal sempre começa vivo
+8. vou ter um metodo pra colocar ele como morto
+9. Aquele escopo ta dizendo que o PET é um animal, intrisecamente. Isso é importante pq isso
+classifica a Herança. 
+10. 
