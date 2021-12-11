@@ -35,6 +35,7 @@ public:
 
 class PET : public Animal{ // nesse escopo, o pet é um animal
     string name;
+    
 public:
     PET (string name, string type): Animal(type), name(name) {
         cout << this->name << " pet created successfully" << endl;
@@ -45,7 +46,11 @@ public:
     }
 
     void play() const{
+        if(this->islive()){
         cout << this->name << " playing"<< endl;
+        } else {
+            cout << this->name << " is dead" << endl;
+        }
     }
 
     string getName() const{
@@ -57,12 +62,46 @@ public:
     }
 };
 
+class Cat : public PET{
+    int lives {9};
+
+public:
+    Cat (string name, int lives = 9): PET(name, "cat"), lives (lives){
+    }
+    ~Cat(){
+    }
+
+    void meow() const{
+        cout << this->getName() << " meowing" << endl;
+    }
+
+    void play() const{
+        cout << this->getName() << " playing" << endl;
+    }
+
+    void die() const{
+        if(this->lives() == 0){
+            cout << this->getName() << " died" << endl;
+        } else if(this->lives > 1);{
+            this->lives--;
+            cout<< " still alive!! Try again later" << endl;
+        } else {
+            cout << "RIP" << endl;
+            this->PET:: die();
+        }
+    }
+
+    friend ostream& operator<<(ostream& os, const Cat& cat){
+        os << cat.getName() << ": " << cat.getType() << ": " << (cat.islive() ? "alive" : "dead");
+        return os;
+   }
+};
+
 int main()
 {   
-    
-   PET dog("Zeca", "Dog");
-   cout << dog << endl;
-   dog.play();
-   cout << "Zeca esta " << dog << endl;
-
+    Cat cat("Cat", 9);
+    cout << cat << endl;
+    cat.play();
+    cat.meow();
+    cout << cat << endl;
 }
