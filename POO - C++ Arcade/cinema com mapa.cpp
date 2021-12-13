@@ -72,7 +72,7 @@ public:
 
     void cancelar(string id)
     { // pra cancelar a reversa
-        for (auto &[indice, client] : cadeiras)
+        for (auto& [indice, client] : cadeiras)
         {
             if (client->getId() == id)
             {

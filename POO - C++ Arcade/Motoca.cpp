@@ -27,7 +27,7 @@ struct Motorcycle
 {
     Person* person;
     int power{1};
-    int time {0};
+    int time{0};
 
     Motorcycle(int power, int time, Person* person = nullptr) :
         power{power}, time{time}, person{person}{

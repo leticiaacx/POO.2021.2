@@ -11,19 +11,20 @@ public:
         cout << this->type << " animal created successfully" << endl;
     }
 
-    ~Animal (){
+   virtual ~Animal (){
         cout << this->type << " animal destroyed successfully" << endl;
     }
 
-    bool islive () const {
+    virtual bool islive () const {
         return isAlive;
-    }
+    }   
 
-    void die (){
+    //esse virtual serve pra caso exista essa mesma função la na frente, so que mais evoluida, substituir 
+    virtual void die (){ // se eu chamar ele na main, ele vai verificar se existe outro die em outro lugar e rodar aquele
         isAlive = false;
     }
 
-    string getType() const{
+    virtual string getType() const{
         return type;
     }
     
@@ -41,11 +42,11 @@ public:
         cout << this->name << " pet created successfully" << endl;
     }
 
-    ~PET(){
+    virtual ~PET(){
         cout << this->name << " destroyed" << endl;
     }
 
-    void play() const{
+    virtual void play() const{
         if(this->islive()){
         cout << this->name << " playing"<< endl;
         } else {
@@ -53,7 +54,7 @@ public:
         }
     }
 
-    string getName() const{
+    virtual string getName() const{
         return name;
     }
 
@@ -68,18 +69,18 @@ class Cat : public PET{
 public:
     Cat (string name, int lives = 9): PET(name, "cat"), lives (lives){
     }
-    ~Cat(){
+    virtual ~Cat(){
     }
 
-    void meow() const{
+    virtual void meow() const{
         cout << this->getName() << " meowing" << endl;
     }
 
-    void play() const{
+    virtual void play() const{
         cout << this->getName() << " playing" << endl;
     }
 
-    void die() const{
+    virtual void die() const{
         if(this->lives() == 0){
             cout << this->getName() << " died" << endl;
         } else if(this->lives > 1);{
