@@ -36,17 +36,17 @@ public:
         // mount output string
     friend iostream &operator<<(iostream &os, Message& msg){
         os << msg.id << ":" << msg.username << " ( " << msg.msg << " )";
-        int msg = msg.likes.size();
+        int msgs = msg.likes.size();
         if (msg.likes.size() > 0){
-            int count = 0;
+            int cout = 1;
             os << "[ ";
             for (auto user : msg.likes){
-                if (count >= msg){
+                if (cout >= msgs){
                     os << user;
                     break;
                 }
                 os << user << ", ";
-                count++;
+                cout++;
             }
             os << " ]";
         }
@@ -104,14 +104,14 @@ public:
     //return allMsgs
    friend iostream& operator<<(iostream& os, Inbox inbox) {
        for (auto i : inbox.getAllMsg()){
-           os << i << '\n';
+           os << i << endl;
        }
        return os;
     }
 };
 
 class User{
-private:
+public:
     string username;
     Inbox inbox;
     map<string, User *> followers;
@@ -139,7 +139,7 @@ public:
     }
 
     void unfollow(string* username){
-        auto it = following.find(username);
+        auto it = following.find(*username);
         if (it != following.end()){
             it->second->followers.erase(it->second->followers.find(this->username));
             following.erase(it);
@@ -244,7 +244,7 @@ int main(){
         if (cmd == "end") {
             break;
         } else if (cmd == "addUser") {
-            std::string name;
+            string name;
             ss >> name;
             controle.addUser(name);
             std::cout << std::endl;
@@ -261,10 +261,10 @@ int main(){
             }
 
             catch (char const *error){
-                cout << "User not found" << endl;
+                cout << "Usuario nao encontrado" << endl;
             }
             cout << endl;
-        } else if (cmd == "twittar") {
+        } else if (cmd == "tuitar") {
             string tweet, user;
             ss >> user;
             tweet = ss.str();
@@ -279,19 +279,26 @@ int main(){
             string username;
             ss >> username;
             controle.getUser(username);
-            cout << std::endl;
+            cout << endl;
         } else if (cmd == "like"){
             string username;
             int twId;
             ss >> username;
             ss >> twId;
             controle.getUser(username)->like(twId);
-            cout << std::endl;
+            cout << endl;
         } else if (cmd == "unfollow") {
             string unfollow, unfollower;
             ss >> unfollow;
             ss >> unfollower;
-            controle.getUser(unfollower)->unfollow(controle.getUser(unfollow));
+
+            try{
+                controle.getUser(unfollower)->unfollow(controle.getUser(unfollow));
+            }
+
+            catch (char const *error){
+                cout << "Usuario nao encontrado" << endl;
+            }
             cout << endl;
         } else {
             cout << "Comando invalido" << endl;
