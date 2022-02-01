@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class Doctor;// criei antes para poder criar o paciente, em baiaxo vou desenvolver 
+class Doctor;// criei antes para poder criar o paciente, em baiaxo vou desenvolver, igual no matricula  
 
 class Patient {// paciente
 public:
