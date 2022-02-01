@@ -65,23 +65,24 @@ public:
     }
 };
 
-class CheckingAccount : public Account{
+class CheckingAccount : public Account{// conta corrente
 public:
     CheckingAccount(int id, string clientId) : Account{id, clientId}{
         this->type = "CC";// inicializando a conta.type com CC
     };
 
-    virtual void monthlyUpdate(){
+    virtual void monthlyUpdate(){//atualizações mensais 
         this->balance -= 20;// retirar um saldo de 20 reais
     }
 };
 
-class SavingsAccounts : public Account{
+class SavingsAccounts : public Account{// conta poupança
 public:
     SavingsAccounts(int id, string clientId) : Account{id, clientId}{
+        this->type = "CP";
     };
 
-    virtual void monthlyUpdate(){
+    virtual void monthlyUpdate(){// atualizações mensais 
         this->balance += this->balance * 0.01;//aumentando o saldo em 1%
     }
 };
