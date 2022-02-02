@@ -36,7 +36,7 @@ public:
     DOC(string name, string sector)
         : name{name}, sector{sector} {}
 
-    void addPatient(Patient *pat) override{
+    void addPatient(Patient *pat) override{ // pedindo o doc pra add o pat
         this->patients[pat->getName()] = pat;
     }
 
@@ -81,7 +81,7 @@ public:
         : name{name}, diagnosis{diagnosis} {}
 
     virtual void addDoc(Doctor *doc) override{
-        this->doctors[doc->getName()] = doc;
+        this->doctors[doc->getName()] = doc;// pedindo pro paciente add o doc
     }
 
     virtual void rmDoc(Doctor* doc) override{
@@ -138,14 +138,14 @@ public:
 
     void addDocs(string name, string sector){
         auto it = this->docs.find(name);
-        if (it == this->docs.end()){
+        if (it == this->docs.end()){// não tem o doc e vai criar
             Doctor *med = new DOC(name, sector);
             this->docs[name] = med;
             cout << "doctor " << name << " registered" << endl;
             return;
         }
 
-        throw HospitalExc("Error!! Doctor already registered");
+        throw HospitalExc("Error!! Doctor already registered");// caso veja que o doc ja existe
     }
 
     void addPatient(string name, string diagnosis){

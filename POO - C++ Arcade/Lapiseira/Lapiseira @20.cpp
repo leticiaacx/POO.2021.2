@@ -51,21 +51,18 @@ public:
         return true;
     }
 
-    bool removerGrafite(int indice)
-        {
-            if (indice < 0)
-            {
-                cout << "Grafite nao existe" << endl;
-                return false;
-            }
-            if (this->bico == nullptr)
-            {
-                cout << "Bico sem grafite" << endl;
-                return false;
-            }
-            this->bico = nullptr;
-            return true;
+    bool removerGrafite(int indice){
+        if (indice < 0) {
+            cout << "Grafite nao existe" << endl;
+            return false;
         }
+        if (this->bico == nullptr){
+            cout << "Bico sem grafite" << endl;
+            return false;
+        }
+        this->bico = nullptr;
+         return true;
+    }
 
     friend ostream &operator<<(ostream &os, const Lapiseira &lapiseira){
             os << "\nGrafite no tambor: | " << endl;

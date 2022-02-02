@@ -149,7 +149,6 @@ public:
     }
 
     void like(int twId){
-        inbox.getTweet(twId)->like(username);
     }
 
     Inbox &getInbox(){
