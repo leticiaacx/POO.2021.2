@@ -83,12 +83,19 @@ public:
          return true;
     }
 
-    void escrever(){// escrevendo
+    void escrever(){ // escrevendo
         if (this->bico == nullptr){
             cout << "Nao tem grafite na lapiseira" << endl;
-        } else if (this->bico->tamanho <= 10){
+        } else if (this->bico->tamanho <= 10) {
             cout << "Nao pode mais escrever! Grafite insuficiente  " << endl;
-        } 
+        } else {
+            this->bico->papel();
+            if (this->bico->tamanho < 10) {
+                cout << "Nao houve grafite suficiente para terminar a folha.\n";
+                int resto = 10 - this->bico->tamanho;
+                this->bico->tamanho + resto;
+            }
+        }
     }
 
     friend ostream &operator<<(ostream &os, const Lapiseira &lapiseira){
