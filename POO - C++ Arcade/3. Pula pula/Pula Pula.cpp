@@ -46,12 +46,12 @@ public:
     Trampoline(int qtdBrinquedos) : playing(qtdBrinquedos, nullptr){
     }
 
-    void arrive(const shared_ptr<Kid>& kid){
+    void arrive(const shared_ptr<Kid>& kid){//fila de espera
         cout << "Na fila de espera aguardando a vez!" << endl;
         this->waiting.push_back(kid);
     }
 
-    bool in(int espaco)
+    bool in(int espaco)//entrando
     {
         if (espaco < 0 || espaco >= this->playing.size())
         {
@@ -75,7 +75,7 @@ public:
         return true;
     }
 
-    void out(){
+    void out(){// fechado
         if (this->playing.size() == 0){
             cout << "Trampolim fechado" << endl;
             return;
@@ -85,7 +85,7 @@ public:
         this->playing.erase(this->playing.begin());
     }
 
-    bool remove(int out) //booleano
+    bool remove(int out) //saindo
     {
         if (out < 0 || out >= this->playing.size())
         {
@@ -101,7 +101,7 @@ public:
         }
 
         cout << "a pessoa " << iterator->getName() << " saiu do trampolim" << endl;
-        this->waiting.push_back(iterator);
+        this->waiting.push_back(iterator);// voltou pra fila 
         iterator = nullptr;
         return true;
     }

@@ -11,55 +11,44 @@ private:
     string id;
 
 public:
-    Client(string fone = "", string id = "") : fone{fone}, id{id}
-    {
-    }
+    Client(string fone = "", string id = "") : fone{fone}, id{id}{}
 
-    string getFone() const
-    {
+    string getFone() const{
         return this->fone;
     }
 
-    string getId() const
-    {
+    string getId() const{
         return this->id;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, Client cliente)
-    {
+    friend std::ostream &operator<<(std::ostream &os, Client cliente){
         os << "Telefone:" << cliente.fone << " Id:" << cliente.id << '\n';
         return os;
     }
 };
 
-class Sala
-{
+class Sala{
 private:
     map<int, shared_ptr<Client>> cadeiras;
     const int qtdCadeiras;
     int assistindo;
 
 public:
-    Sala(int qtdCadeiras) : qtdCadeiras{qtdCadeiras}, assistindo{0}
-    {
+    Sala(int qtdCadeiras) : qtdCadeiras{qtdCadeiras}, assistindo{0}{
     } // Construtor
 
-    void reservar(string name, string fone, int indice)
-    { // nesse aqui vou verificar se a cadeira ta ou não ocupada
-        if (qtdCadeiras == assistindo)
-        {
+    void reservar(string name, string fone, int indice){ // nesse aqui vou verificar se a cadeira ta ou não ocupada
+        if (qtdCadeiras == assistindo){
             cout << "Cadeira ocupada" << endl; // aqui vai me retornar quando a cadeira estiver ocupada
             return;
         }
 
-        if (indice < 0 || indice >= qtdCadeiras)
-        {
+        if (indice < 0 || indice >= qtdCadeiras){
             cout << "Id invalido" << endl; // aqui vai me retornar quando ele considerar o id invalido
             return;
         }
 
-        if (cadeiras[indice] != nullptr)
-        {
+        if (cadeiras[indice] != nullptr){
             cout << "Cadeira revervada" << endl;
             return; // vai me retornar quando a cadeira estiver reversada
         }
@@ -70,12 +59,9 @@ public:
         this->assistindo++;
     }
 
-    void cancelar(string id)
-    { // pra cancelar a reversa
-        for (auto& [indice, client] : cadeiras)
-        {
-            if (client->getId() == id)
-            {
+    void cancelar(string id){ // pra cancelar a reversa
+        for (auto& [indice, client] : cadeiras){
+            if (client->getId() == id){
                 cadeiras.erase(indice); // cadeira na posição i for igual a nuulptr é pq a reserva foi cancelada
                 cout << "Reserva cancelada" << endl;
                 cout << id << " foi embora da sala de cinema" << endl;
@@ -84,8 +70,7 @@ public:
         }
     }
 
-    friend ostream &operator<<(ostream &os, const Sala &s)
-    {
+    friend ostream &operator<<(ostream &os, const Sala &s){
         for (int i = 0; i < s.qtdCadeiras; i++)
         {
             auto cadeira = s.cadeiras.find(i);

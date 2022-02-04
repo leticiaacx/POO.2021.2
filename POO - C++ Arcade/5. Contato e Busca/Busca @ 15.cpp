@@ -114,7 +114,7 @@ class Agenda{
 private:
     vector<Contact> contacts;
 
-    int findPos(string name){
+    int findPos(string name){ // aqui ele vai retornar a posição do contato ou retorna -1
         for (int i = 0; i < (int)contacts.size(); i++){
             if (contacts[i].getName() == name){
                 return i;
@@ -123,7 +123,7 @@ private:
         return -1;
     }
 
-    bool existente(string name){
+    bool existente(string name){// aqui vai verificar a existencia pelo nome
         for (int i = 0; i < (int)contacts.size(); i++){
             if (contacts[i].getName() == name){
                 return true;
@@ -132,7 +132,7 @@ private:
         return false;
     }
 
-     bool foneEnc(vector<Fone> fones, string pattern) {
+     bool foneEnc(vector<Fone> fones, string pattern) {// aqui vai retornar vdd quando encontrado
         for(int i = 0; i < (int)fones.size(); i++){
             if (fones[i].getNumber().find(pattern) != string::npos) {
                 return true;
@@ -148,32 +148,33 @@ public:
         return this->contacts[findPos(name)];
     }
 
-    void addContact(Contact contact){
+    void addContact(Contact contact){// adicionando o contato
         if (!existente(contact.getName())){
-            this->contacts.push_back(contact);
+            this->contacts.push_back(contact);// indo pro final da lista 
             return;
         }
 
-        int pos = findPos(contact.getName());
-        vector<Fone> fones = contact.getFones();
+        int pos = findPos(contact.getName()); 
+        vector<Fone> fones = contact.getFones();// 
         for (int i = 0; i < (int)fones.size(); i++){
-            contacts[pos].addFone(fones[i]);
+            contacts[pos].addFone(fones[i]);// add um ja existente a um contato 
         }
     }
-    void rmContact(string name, int index){
-        int pos = findPos(name);
-        if (pos != -1){
-            this->contacts[pos].rmFone(index);
+
+    void rmContact(string name, int index){// removendo o contato por nome e indice
+        int pos = findPos(name);// vai procurar o ctt 
+        if (pos != -1){ // caso exista
+            this->contacts[pos].rmFone(index);// vai remover UM fone
             return;
         }
-        cout << "Contato nao existente" << '\n';
+        cout << "Contato nao existente" << '\n';// caso nao, vai imprimir isso
         return;
     }
 
-    void rmContact(string name){
+    void rmContact(string name){ // removendo por indice
         int pos = findPos(name);
         if (pos != -1){
-            this->contacts.erase(contacts.begin() + pos);
+            this->contacts.erase(contacts.begin() + pos);// apagando o contato todoo
             cout << "Contato selecionado foi apagado" << '\n';
             return;
         }
@@ -181,22 +182,22 @@ public:
         return;
     }
 
-    vector<Contact> search(string pattern){
-        vector<Contact> contAchados;
+    vector<Contact> search(string contact){ // procurando contato 
+        vector<Contact> contAchados; // criei esse vector para armazer os contatos achados 
         for (int i = 0; i < (int)contacts.size(); i++){// iniciando um ciclo pra buscar um contato pelo nome
-            if (contacts[i].getName().find(pattern) != string::npos){
-                contAchados.push_back(contacts[i]);
+            if (contacts[i].getName().find(contact) != string::npos){
+                contAchados.push_back(contacts[i]);// add os contatos achados
                 cout << contAchados[i] << endl;
             }
         }
         for (int i = 0; i < (int)contacts.size(); i++){
-            if (foneEnc(contacts[i].getFones(), pattern) == true){
+            if (foneEnc(contacts[i].getFones(), contact) == true){ // aqui ele usa o foneEnc, que retorna vdd quando acha o contato 
                 contAchados.push_back(contacts[i]);
                 cout << contAchados[i] << '\n';
             }
         }
 
-         if ((int)contAchados.size() == 0){
+         if ((int)contAchados.size() == 0){// aqui caso não sei encontrado nada
             cout << "Nao foi possivel encontrar nada" << endl;
             }
          return contAchados;

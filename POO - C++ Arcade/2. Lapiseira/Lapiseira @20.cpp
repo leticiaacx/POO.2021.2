@@ -1,4 +1,6 @@
 #include <iostream>
+#include <algorithm>
+#include <sstream>
 #include <vector>
 #include <list>
 #include <memory>
@@ -17,7 +19,7 @@ public:
 
     ~Grafite() {}// destrutor do Grafite
 
-    int papel(){
+    int papel(){ // dureza do grafite
         if (this->dureza == "HB"){
             return 1;
         } else if (this->dureza == "2B") {
@@ -30,6 +32,18 @@ public:
             cout << "Invalido" << endl;
             return 0;
         }
+    }
+
+    float getCalibre(){
+        return this->calibre;
+    }
+
+    int getTamanho(){
+        return this->tamanho;
+    }
+
+    string getDureza(){
+        return this->dureza;
     }
 
     friend ostream& operator<<(ostream& os, const Grafite& grafite) { // impressão 
@@ -47,7 +61,9 @@ public:
     float calibre{0};
 
     Lapiseira(float dureza = 0) :
-        calibre{calibre} {}
+        calibre{calibre} {} // contrutor 
+
+    ~Lapiseira(){} // destrutor
 
     bool inserirGrafite(const shared_ptr<Grafite> grafite){// inserir grafite
         if (grafite->calibre != this->calibre){ 
@@ -59,19 +75,19 @@ public:
         return true;
     }
 
-    bool puxarGrafite(){
-        if (this->bico != nullptr){
-            cout << "remova primeiro o grafite!!" << endl;
+    bool puxarGrafite(){ 
+        if (this->bico != nullptr){ //
+            cout << "remova primeiro o grafite!!" << endl;// avisando que precisa remover o grafite primeiro
             return false;
         }
 
-        this->bico = this->tambor.front(); // ta apontando pro bico pra puxar da frente
+        this->bico = this->tambor.front(); // ta puxando do bico pro tambor
         this->tambor.pop_front();                  
         return true;
     }
 
     bool removerGrafite(int indice){
-        if (indice < 0) { // verificando a existencia
+        if (indice < 0 || indice >= this->tambor.size()) { // verificando a existencia
             cout << "Grafite nao existe" << endl;
             return false;
         }
@@ -80,17 +96,17 @@ public:
             return false;
         }
         this->bico = nullptr;// removendo
-         return true;
+        return true;
     }
 
     void escrever(){ // escrevendo
-        if (this->bico == nullptr){
+        if (this->bico == nullptr){ 
             cout << "Nao tem grafite na lapiseira" << endl;
-        } else if (this->bico->tamanho <= 10) {
+        } else if (this->bico->tamanho <= 10) { //grafite menor que 10 
             cout << "Nao pode mais escrever! Grafite insuficiente  " << endl;
         } else {
-            this->bico->papel();
-            if (this->bico->tamanho < 10) {
+            this->bico->papel(); 
+            if (this->bico->tamanho < 10) { // grafite pequeno demais pra escrever 
                 cout << "Nao houve grafite suficiente para terminar a folha.\n";
                 int resto = 10 - this->bico->tamanho;
                 this->bico->tamanho + resto;
@@ -134,6 +150,7 @@ int main () { //testes
     lapiseira.removerGrafite(1);
     lapiseira.removerGrafite(0);
 
+    cout << lapiseira << endl;
 
     return 0;
 }

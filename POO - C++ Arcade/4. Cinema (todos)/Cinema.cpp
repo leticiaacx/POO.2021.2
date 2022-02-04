@@ -32,20 +32,33 @@ public:
 class Sala{
 private:
     vector<shared_ptr<Client>> cadeiras;
+    int capacidade;
 
 public:
-    Sala(int capacidade) : cadeiras(capacidade, nullptr){
+    Sala(int capacidade = 0) : cadeiras(capacidade, nullptr){
+        this->capacidade = capacidade;
     } //Construtor
 
-    bool reservar(shared_ptr<Client> client, int ind){ //nesse aqui vou verificar se a cadeira ta ou não ocupada
-        if (this->cadeiras[ind] != nullptr || ind >= (int)this->cadeiras.size()){
-            cout << "Cadeira ocupada" << endl; //aqui vai me retornar falso quando a cadeira estiver ocupada
-            return false; 
+    void addClient(const shared_ptr<Client> client){
+        cout << "cadeiras livres: " << endl;
+        for (int i = 0; i < this->capacidade; i++){
+            if (cadeiras[i] == nullptr)
+                cout << "[ " << i << " ]" << " " << endl;
+        }
+    }
+
+    void reservar(shared_ptr<Client> client, int ind){ //nesse aqui vou verificar se a cadeira ta ou não ocupada
+        if (ind < 0 || ind >= this->capacidade){
+            cout << "cadeira nao existente" << endl;
+            addClient(client);
+        }
+        if (cadeiras[ind] != nullptr){// aqui ele vai imprimir dizendo que a cadeira esta ocupada
+            cout << "cadeira ocupada" << endl;
+            addClient(client);
         }
 
-        this->cadeiras[ind] = client;
-        cout << "Cadeira revervada" << endl; 
-        return true; // vai me retornar true quando a cadeira estiver vazia e reversada por mim
+        cout << "cadeira reservada" << endl;// se nao entrar nos ifs, ele reservou a cadeira
+        cadeiras[ind] = client;
     }
 
     void cancelar(string id){ // pra cancelar a reversa
@@ -65,7 +78,7 @@ public:
             if (cadeira != nullptr)
                 os << cadeira;
             else
-                os << "*****";
+                os << "-----";
             os << " // ";
         }
         return os;
@@ -74,16 +87,15 @@ public:
 
 int main()
 {   //testes
-    Sala cinema(6);
+    system("cls");
+    Sala cinema(3);
 
-    cinema.reservar(make_shared<Client>("287381","Davi"), 1);
-    cinema.reservar(make_shared<Client>("381931" ,"Joao"), 2);
-    cinema.reservar(make_shared<Client>("9328", "Maria"), 6);
-    cout << "\n";
+    cinema.reservar(make_shared<Client>(5, 14589), 3);
+    cinema.reservar(make_shared<Client>(6, 123459), 8);
+    cinema.reservar(make_shared<Client>(7, 16789), 6);
 
-    cinema.cancelar("Joao");
-    cout << "\n";
+    cinema.cancelar("3");
 
-    cout << cinema << endl; 
-    cout << "\n";
+    cout << cinema << endl;
+    return 0;   
 }

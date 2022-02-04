@@ -8,15 +8,15 @@ using namespace std;
 class Account{
 protected: 
     int id;
-    float balance{0};
+    float balance{0};// saldo
     string clientId;
-    string type;
+    string type; //conta corrente/poupança
 
 public:
     Account(int id, string clientId) : id(id), clientId(clientId){
     };
 
-    virtual void monthlyUpdate() = 0;
+    virtual void monthlyUpdate() = 0; // metodo para att mensal
 
     virtual void withdraw(float valor){//saque
         if (valor <= 0){ //se o valor for menor que 0, valor invalido
@@ -90,14 +90,14 @@ public:
 class Client{
 
     string clientId;
-    vector<shared_ptr<Account>> accounts;
+    vector<shared_ptr<Account>> accounts; //varias contas
 
 public:
     Client(string clientId) : clientId{clientId} {//construtor
     };
 
     virtual void addAccount(const shared_ptr<Account> &account){
-        this->accounts.push_back(account);
+        this->accounts.push_back(account); // add contas no final do vector
     }
 
     virtual string getClientId() const{
@@ -129,11 +129,11 @@ public:
 
 class Bank{
 private:
-    map<string, shared_ptr<Client>> clients;
-    map<int, shared_ptr<Account>> accounts;
+    map<string, shared_ptr<Client>> clients; //mapa com os clientes
+    map<int, shared_ptr<Account>> accounts; // mapa com as contas
     int nextAccountId{0};
 
-    virtual shared_ptr<Account> getAccount(int id){ 
+    virtual shared_ptr<Account> getAccount(int id){ // busca pela conta
         auto it = this->accounts.find(id);
         if (it == this->accounts.end()){
             cout << "Conta nao encontrada no sistema" << endl;
@@ -142,49 +142,59 @@ private:
         return it->second;
     }
 
+    bool searchClient(string client){
+        auto it = clients.find(client);//procurar dentro do cliente
+        if (it != clients.end()){// achou, existente
+            return true;
+        } else {
+            cout << "Cliente nao registrado" << endl;
+            return false;
+        }
+    }
+    
 public:
     Bank(){};
 
-    virtual void addAccount(string clientId){ 
-        auto it = this->clients.find(clientId);
-        if (it != this->clients.end()){
-            cout << "Voce ja e nosso client" << endl;
+    virtual void addAccount(string clientId){ // add cliente
+        auto it = this->clients.find(clientId);// procurando conta
+        if (it != this->clients.end()){// achou
+            cout << "Voce ja e nosso client" << endl;// caso ja exista o cliente
         }
 
-        Client c{clientId};
+        Client c{clientId}; // criando novo cliente
 
-        SavingsAccounts sa{this->nextAccountId, clientId};
-        c.addAccount(make_shared<SavingsAccounts>(sa));
-        this->accounts[this->nextAccountId] = make_shared<SavingsAccounts>(sa);
+        SavingsAccounts contaP{this->nextAccountId, clientId}; //criando uma conta poupança
+        c.addAccount(make_shared<SavingsAccounts>(contaP)); // add a contaP como conta poupança
+        this->accounts[this->nextAccountId] = make_shared<SavingsAccounts>(contaP);
 
         this->nextAccountId++;
 
-        CheckingAccount cc{this->nextAccountId, clientId};
-        c.addAccount(make_shared<CheckingAccount>(cc));
+        CheckingAccount cc{this->nextAccountId, clientId};//criando uma conta corrente
+        c.addAccount(make_shared<CheckingAccount>(cc));// add a cc como conta corrente
         this->accounts[this->nextAccountId] = make_shared<CheckingAccount>(cc);
 
         this->clients[clientId] = make_shared<Client>(c);
         this->nextAccountId++;
     }
 
-    virtual void withdraw(int idConta, float value){
+    virtual void withdraw(int idConta, float value){//saque
         shared_ptr<Account> conta{getAccount(idConta)};
         conta->withdraw(value);
     }
 
-    virtual void deposit(int idConta, float value){
+    virtual void deposit(int idConta, float value){//deposito
         shared_ptr<Account> conta{getAccount(idConta)};
         conta->deposit(value);
     }
 
-    virtual void transfer(int contaDe, int contaPara, float value){
+    virtual void transfer(int contaDe, int contaPara, float value){//tranferencia
         shared_ptr<Account> conta{getAccount(contaDe)};
         shared_ptr<Account> conta2{getAccount(contaPara)};
 
         conta->transfer(conta2, value);
     }
 
-    virtual void monthlyUpdate(){
+    virtual void monthlyUpdate(){// atualizações mensais
         for (auto it = this->accounts.begin(); it != this->accounts.end(); ++it){
             it->second->monthlyUpdate();
         }

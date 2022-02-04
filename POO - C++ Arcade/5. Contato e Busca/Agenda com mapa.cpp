@@ -1,8 +1,7 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 #include <memory>
-#include <list>
+#include <map>
 
 using namespace std;
 
@@ -43,18 +42,16 @@ public:
         }
     }
 
-    friend ostream &operator<<(ostream &os, Fone &fone)
-    {
+    friend ostream &operator<<(ostream &os, Fone &fone){
         os << fone.id << ": " << fone.number << "]" << endl;
         return os;
     }
 };
 
 class Contact{
-private:
+public:
     string name;
     vector<Fone> fones;
-
 protected:
     string prefix = "-";
 
@@ -112,28 +109,93 @@ public:
     }
 };
 
+class Agenda{
+private:
+    map<string, Contact> contatos;
+    
+public:
+    Agenda(){};
+
+    Contact getContact(string name){
+        return this->contatos[name];
+    }
+
+    void addContact(Contact contato){
+        auto it = contatos.find(contato.name);
+        if(it == contatos.end()){
+            contatos[contato.name] = contato;
+        } else{
+            it ->second.addFone(contato.fones[0]);
+        }
+    }
+
+    void rmContact(string name){
+        auto it = contatos.find(name);
+
+        if (it != contatos.end()) {
+            contatos.erase(it);
+        } else {
+            cout << "Contato " << name << " nao existe" << endl;
+        }
+    }
+
+    void rmContact(string name, int index){
+        auto it = contatos.find(name);
+
+        if (it != contatos.end()){
+            it->second.rmFone(index);
+        } else {
+            cout << "Contato selecionado nao existe na agenda" << endl;
+        }
+    }
+
+    void search(string s){
+        for (auto cont : contatos){
+            size_t found = cont.second.getName().find(s);
+            if (found != string::npos){
+                cout << cont.second << endl;
+            }
+        }
+        cout << '\n';
+    }
+
+    friend ostream &operator<<(ostream &os, Agenda &a){
+        os << '\n';
+
+        for (auto cont : a.contatos){
+            os << cont.second << '\n';
+        }
+        return os;
+    }
+};
+
 int main()
 {
-    Contact contato("Joao");
-    contato.addFone(Fone("oi", "9183"));
-    contato.addFone(Fone("casa", "328948"));
-    cout << "\n";
+    cout << "---AGENDA INICIALIZADA---" << endl;
+    Agenda agenda;
 
-    Contact contato2("Maria");
-    contato2.addFone(Fone("claro", "9183"));
-    cout << "\n";
+    cout << "Adicionando contatos...." << endl;
+    Contact Joao{"Joao"};
+    Contact Lara{"Lara"};
+    Contact Ana{"Ana"};
 
-    Contact contato3("Leo");
-    contato3.addFone(Fone("casa", "9123"));
-    contato3.rmFone(0);
-    cout << "\n";
+    Joao.addFone(Fone{"oi", "888"});
+    Lara.addFone(Fone{"tim", "788"});
+    Lara.addFone(Fone{"claro", "138"});
+    Ana.addFone(Fone{"vivo", "246"});
 
-    Contact contato4("Leticia");
-    contato4.addFone(Fone("Zap", "9183"));
-    cout << "\n";
+    cout << "Lista de contatos...." << endl;
+    agenda.addContact(Joao);
+    agenda.addContact(Lara);
+    agenda.addContact(Ana);
 
-    cout << contato << endl;
-    cout << contato2 << endl;
-    cout << contato3 << endl;
-    cout << contato4 << endl;
+    cout << agenda << endl;
+
+    cout << "Removendo contatos...." << endl;
+    agenda.rmContact("Ana");
+    agenda.rmContact("Lara", 1);
+
+    cout << "Procurando contatos...." << endl;
+    agenda.search("88");
+    cout << agenda << endl;
 }

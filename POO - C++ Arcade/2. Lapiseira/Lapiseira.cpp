@@ -1,16 +1,18 @@
 #include <iostream>
 #include <algorithm>
 
+using namespace std;
+
 struct Grafite {
     float calibre;
-    std::string dureza;
+    string dureza;
     int tamanho;
 
-    Grafite(float calibre = 0, std::string dureza = "", int tamanho = 0) : 
+    Grafite(float calibre = 0, string dureza = "", int tamanho = 0) : 
         calibre{calibre}, dureza{dureza}, tamanho{tamanho} {
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const Grafite& grafite) {
+    friend ostream& operator<<(ostream& os, const Grafite& grafite) {
         os << "Calibre: " << grafite.calibre << " mm, ";
         os << "Dureza: " << grafite.dureza << ", ";
         os << "Tamanho: " << grafite.tamanho << " mm\n";
@@ -21,16 +23,17 @@ struct Grafite {
 struct Lapiseira {
     float calibre; //4 bytes
     Grafite* grafite; //8 bytes
+    
     Lapiseira(float calibre, Grafite* grafite = nullptr) : 
         calibre{calibre}, grafite{grafite} {
     }
     bool inserirGrafite(Grafite* grafite) {
         if(this->grafite != nullptr) {
-            std::cout << "Ja tem grafite\n";
+            cout << "Ja tem grafite" << endl;
             return false;
         }
         if(grafite->calibre != this->calibre) {
-            std::cout << "Calibre incompativel\n";
+            cout << "Calibre incompativel" << endl;
             return false;
         }
         this->grafite = grafite;
@@ -39,10 +42,10 @@ struct Lapiseira {
     
     Grafite* removerGrafite() {
         if (this->grafite != nullptr) {
-            std::cout << "Nao tem grafite\n";
+            cout << "Nao tem grafite" << endl;
             return nullptr;
         }
-        return std::exchange(this->grafite, nullptr);
+        return exchange(this->grafite, nullptr);
     }
 };
 
@@ -52,8 +55,8 @@ int main() {
     Lapiseira lapiseira(0.5, &grafite);
     lapiseira.grafite->tamanho -= 5;
 
-    std::cout << grafite.tamanho << "\n";
-    std::cout << lapiseira.grafite->tamanho << "\n";
+    cout << grafite.tamanho << endl;
+    cout << lapiseira.grafite->tamanho << endl;
     
     return 0;
 }
