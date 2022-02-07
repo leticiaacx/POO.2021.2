@@ -182,25 +182,31 @@ public:
         return;
     }
 
-    vector<Contact> search(string contact){ // procurando contato 
-        vector<Contact> contAchados; // criei esse vector para armazer os contatos achados 
-        for (int i = 0; i < (int)contacts.size(); i++){// iniciando um ciclo pra buscar um contato pelo nome
+    void listarContatos(){
+        for (auto contato : this->contacts){
+            cout << contato << endl;
+        }
+    }
+
+    vector<Contact> search(string contact){// procurando contato
+        vector<Contact> contAchados; // criei esse vector para armazer os contatos achados
+        for (int i = 0; i < (int)contacts.size(); i++){ // iniciando um ciclo pra buscar um contato pelo nome
             if (contacts[i].getName().find(contact) != string::npos){
-                contAchados.push_back(contacts[i]);// add os contatos achados
+                contAchados.push_back(contacts[i]); // add os contatos achados
                 cout << contAchados[i] << endl;
             }
         }
         for (int i = 0; i < (int)contacts.size(); i++){
-            if (foneEnc(contacts[i].getFones(), contact) == true){ // aqui ele usa o foneEnc, que retorna vdd quando acha o contato 
+            if (foneEnc(contacts[i].getFones(), contact) == true){ // aqui ele usa o foneEnc, que retorna vdd quando acha o contato
                 contAchados.push_back(contacts[i]);
                 cout << contAchados[i] << '\n';
             }
         }
 
-         if ((int)contAchados.size() == 0){// aqui caso não sei encontrado nada
+        if ((int)contAchados.size() == 0){ // aqui caso não sei encontrado nada
             cout << "Nao foi possivel encontrar nada" << endl;
-            }
-         return contAchados;
+        }
+        return contAchados;
     }
 
     friend std::ostream &operator<<(std::ostream &os, const Agenda &a){
@@ -215,7 +221,7 @@ public:
         }
         return os;
     }
-};
+    };
 
 int main()
 {

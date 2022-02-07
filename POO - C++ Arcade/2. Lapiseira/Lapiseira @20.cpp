@@ -105,12 +105,8 @@ public:
         } else if (this->bico->tamanho <= 10) { //grafite menor que 10 
             cout << "Nao pode mais escrever! Grafite insuficiente  " << endl;
         } else {
-            this->bico->papel(); 
-            if (this->bico->tamanho < 10) { // grafite pequeno demais pra escrever 
-                cout << "Nao houve grafite suficiente para terminar a folha.\n";
-                int resto = 10 - this->bico->tamanho;
-                this->bico->tamanho + resto;
-            }
+            this->bico->papel();
+            cout << "Escrevendo..." << endl;
         }
     }
 

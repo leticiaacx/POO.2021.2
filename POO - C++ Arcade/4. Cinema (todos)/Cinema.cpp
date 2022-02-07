@@ -39,7 +39,7 @@ public:
         this->capacidade = capacidade;
     } //Construtor
 
-    void addClient(const shared_ptr<Client> client){
+    void assentos(const shared_ptr<Client> client){
         cout << "cadeiras livres: " << endl;
         for (int i = 0; i < this->capacidade; i++){
             if (cadeiras[i] == nullptr)
@@ -47,14 +47,25 @@ public:
         }
     }
 
+    bool verificador(string id){
+        for (auto cadeira : cadeiras){
+            if (cadeira != nullptr && cadeira->getId() != id)
+                return true;
+        }
+        return false;
+    }
+
     void reservar(shared_ptr<Client> client, int ind){ //nesse aqui vou verificar se a cadeira ta ou não ocupada
         if (ind < 0 || ind >= this->capacidade){
             cout << "cadeira nao existente" << endl;
-            addClient(client);
+            assentos(client);
         }
         if (cadeiras[ind] != nullptr){// aqui ele vai imprimir dizendo que a cadeira esta ocupada
             cout << "cadeira ocupada" << endl;
-            addClient(client);
+            assentos(client);
+        }
+        if (this->verificador(client->getId())){
+            cout << "O cliente ja esta na sala" << endl;
         }
 
         cout << "cadeira reservada" << endl;// se nao entrar nos ifs, ele reservou a cadeira

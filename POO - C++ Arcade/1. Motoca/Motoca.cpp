@@ -61,7 +61,6 @@ public:
     }
 
     void buy(int tempo){//comprando tempo
-        int buyTime;
         if (this->time == 0){
             cout << "Time's up! Get more time!\n";
     
@@ -83,15 +82,24 @@ public:
         } else {
             cout << "Time finalized" << endl;
         }
+        for (this->time; this->time > 0; this->time--){
+            cout << "driving: " << this->time << " minutes" << endl;
+            this->power++;
+        }
     }
 
     Person *honk(){// buzinando
-        if (this->person != nullptr){
-            cout << "pemmm" << endl;
-        } else{
+        if (this->person == nullptr){
             cout << "The motorcycle is empty" << endl;
+        } else {
+            cout << "p" << endl;
+            for (int i = 0; i < this->power; i++){
+                cout << "e";
+            }
+            cout << "m" << endl;
         }
     }
+
     friend std::ostream &operator<<(std::ostream &os, const Motorcycle &motor){
         os << "Power: " << motor.power << ", ";
         os << "time: " << motor.time << ", ";;
