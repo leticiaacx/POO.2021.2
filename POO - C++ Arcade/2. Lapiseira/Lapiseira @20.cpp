@@ -81,8 +81,8 @@ public:
             return false;
         }
 
-        this->bico = this->tambor.front(); // ta puxando do bico pro tambor
-        this->tambor.pop_front();                  
+        this->bico = this->tambor.front(); // imprime
+        this->tambor.pop_front(); // retira   
         return true;
     }
 
