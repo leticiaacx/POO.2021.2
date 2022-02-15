@@ -133,7 +133,7 @@ public:
             return;
         }
 
-        cout << "Error!! Doctor already registered" << endl;// caso veja que o doc ja existe
+        throw runtime_error("Error!! Doctor already registered"); // caso veja que o doc ja existe
     }
 
     void addPatient(string name, string diagnosis){// add um paciente ao hospital
@@ -145,7 +145,7 @@ public:
             return;
         }
 
-        cout <<"Error!!! Patient existent" << endl; // caso o paciente ja exista
+        throw runtime_error("Error!!! Patient existent"); // caso o paciente ja exista
     }
 
     void link(string nameD, string nameP){// vinculando o doutor e o paciente
@@ -153,24 +153,24 @@ public:
         auto itP = this->patients.find(nameP); // procurando o paciente
 
         if (itD == this->docs.end() && itP == this->patients.end()){ // nao achou nem um
-            cout <<"Error!!! Non-existent registrations" << endl;
+            throw runtime_error ("Error!!! Non-existent registrations");
             return;
         }
 
         if (itD== this->docs.end()){// nao achou o doutor
-            cout << "Error!!! No registration" << endl;
+            throw runtime_error ("Error!!! No registration");
             return;
         }
 
         if (itP == this->patients.end()){// nao achou o paciente
-            cout <<"Error!!! No registration" << endl;
+            throw runtime_error ("Error!!! No registration");
             return;
         }
 
         auto listsDocs = itP->second->getDocs(); // criando uma lista 
         for (auto med : listsDocs){ // lista tal medical 
             if (med.second->getSectors() == itD->second->getSectors()){ //vendo se x doutor pode atender o paciente, pela especialidade
-                cout <<"Error!!! Other doctors may attend to you" << endl; // pode
+                throw runtime_error ("Error!!! Other doctors may attend to you"); // pode
                 return;
             }
         }
@@ -183,7 +183,7 @@ public:
     void rmPatient(string name){// remover paciente pelo nome 
         auto it = this->patients.find(name); // procurando o paciente
         if (it == this->patients.end()){// nao achou
-            cout <<"Error!!! Non-existent registration" << endl;
+            throw runtime_error ("Error!!! Non-existent registration");
             return;
         }
 
@@ -198,7 +198,7 @@ public:
     void rmDocs(string name){ // remvover doutor
         auto it = this->docs.find(name); //vai procurar atraves do iterator
         if (it == this->docs.end()){// nao achou
-            cout << "Error!!! Non-existent registration" << endl;
+            throw runtime_error ("Error!!! Non-existent registration");
             return;
         }
 
